@@ -29,7 +29,7 @@ namespace Crossword
             {
                 Console.Clear();
                 Console.WriteLine();
-                Console.WriteLine("Posible actions (Press appropriate key number):");
+                Console.WriteLine("Possible actions (Press appropriate key number):");
                 Console.WriteLine("1 - Guess the word:\n2 - Add the riddle:\n3 - Show list of questions:\n");
                 int n;
                
@@ -40,6 +40,8 @@ namespace Crossword
 
                     switch (n)
                     {
+                        case 0:
+                            return;
                         case 1:
                             
                             GuessTheWord(listOfRiddles);
@@ -51,11 +53,13 @@ namespace Crossword
                         case 3:
                             
                             ShowListOfQuestions(listOfRiddles);
-                           
+
+                            
+
                             break;
                         default:
+                            Environment.Exit(0);
                             
-                            Escape();
                             break;
                     }
                 }else
@@ -64,20 +68,7 @@ namespace Crossword
                 }
             } while (Console.ReadKey().Key != ConsoleKey.Escape);
     }
-        static void Escape()
-        {
-            var key = Console.ReadKey();
-            if (key.Key == ConsoleKey.Escape)
-            {
-                Environment.Exit(0);
-            }
-            else
-            {
-                Console.ReadLine();
-
-
-            }
-        }
+       
 
         class Riddle
         {
@@ -139,7 +130,8 @@ namespace Crossword
         static void ShowListOfQuestions (List<Riddle> list)
         {
             Console.Clear();
-            Console.WriteLine("Show list of questions:");
+            Console.WriteLine("List of questions:");
+            Console.WriteLine("(0 - Return to main menu)");
             Console.WriteLine();
             int i = 0;
             foreach (Riddle r in list)
@@ -149,6 +141,8 @@ namespace Crossword
                 Console.WriteLine("   Description: {0};", r.Description);
                 Console.WriteLine();
             }
+
+            
         }
 
         static Riddle AddTheRiddle()
@@ -188,7 +182,7 @@ namespace Crossword
                 Console.Clear();
 
                 Console.WriteLine("Guess the word:");
-                Console.WriteLine("0 - Return to main menu:");
+                Console.WriteLine("(0 - Return to main menu)");
 
                 Console.WriteLine();
 
@@ -224,7 +218,11 @@ namespace Crossword
 
                         Console.WriteLine("Guess the letter or whole word:");
                         guess = Console.ReadLine();
-                        if (guess.Length == 1)
+                        if (guess.Length == 1 && guess == "0")
+                        {
+                            return;
+                        }
+                        else if (guess.Length == 1)
                         {
                             letter = Char.Parse(guess);
                         }
